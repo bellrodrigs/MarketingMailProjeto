@@ -56,14 +56,15 @@ public void servidor(){
                 
                 //colcoar o metodo que envia email com dois parametros email - corpo da mensagem
                 
-                Integer resp = 0;
+                Integer resp = null;
                 
                 TelaEnviarEmail envia = new TelaEnviarEmail();
                 
                 if(envia.EnviaAndroid(emailUsuario, senhaUsuario, email, assunto, mensagem)){
                     resp = 1;
                     System.out.println("enviado com sucesso");                    
-                }else {
+                }else if(!envia.EnviaAndroid(emailUsuario, senhaUsuario, email, assunto, mensagem)) {
+                    resp = 0;
                     System.out.println("não foi enviado");
                 }
                 

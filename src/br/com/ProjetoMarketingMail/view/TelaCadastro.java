@@ -22,6 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
@@ -98,7 +100,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         }
         celular = new javax.swing.JTextField();
         try{
-            javax.swing.text.MaskFormatter cel = new javax.swing.text.MaskFormatter("##########");
+            javax.swing.text.MaskFormatter cel = new javax.swing.text.MaskFormatter("###########");
             celular = new javax.swing.JFormattedTextField(cel);
         } catch (Exception e) {
         }
@@ -305,14 +307,20 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        if (nomeCliente.getText().equals("")) {
+        String Email = email.getText();
+         if (!Email.matches("^[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+                 || Email.equals("") || Email.length() > 80) {
+             JOptionPane.showMessageDialog(null, "Verifique se:\n"
+                     + "- E-mail está vazio\n"
+                     + "- Formato do e-mail está corrento Ex: exemplo@exemplo.com\n"
+                     + "- O E-mail precisa conter no máximo 80 caracteres");
+        }
+         else if (nomeCliente.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "O nome não pode estar vazio");
         } else if (selecionaGrupo.equals("")) {
             JOptionPane.showMessageDialog(null, "É preciso ter ao menos um grupo cadastrado");
-        } else if (email.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "O E-mail não pode estar vazio");
-        } else {
+        }
+         else {
             try {
                 marketingmailctrl.incluir(novoContato());
                 JOptionPane.showMessageDialog(
@@ -371,16 +379,35 @@ public class TelaCadastro extends javax.swing.JFrame {
             );
         }
     }
+    public static Boolean isEmail(String Email, String resposta) {
+        // Se o e-mail estiver vazio...
+        if(Email.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, preencha o campo E-mail");
+            
+            return false;
+        }
+        
+        // Se o e-mail conter mais de 60 caracteres...
+        if(Email.length() > 60) {
+            JOptionPane.showMessageDialog(null, "E-mail deve conter atÃ© 60 caracteres");
+            
+            return false;
+        }
+        
+        // Se o e-mail nÃ£o seguir o padrÃ£o de composiÃ§Ã£o...
+        if(!Email.matches("^[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(null, "Por favor, digite um E-mail vÃ¡lido");
+            
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
 
-    /**
-     * public void localizarGrupo() { marketingdao.consultarGrupo(grupo);
-     * preencherGrupo(); }
-     *
-     * public void preencherGrupo() {
-     * selecionaGrupo.addItem(String.valueOf(grupo.getIdgrupo()) + " " +
-     * grupo.getNome());
-    }*
-     */
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

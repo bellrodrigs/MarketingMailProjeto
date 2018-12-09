@@ -301,11 +301,16 @@ public class TelaInfoContato extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        if (nomeCliente.getText().equals("")) {
+        String Email = email.getText();
+         if (!Email.matches("^[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+                 || Email.equals("") || Email.length() > 80) {
+             JOptionPane.showMessageDialog(null, "Verifique se:\n"
+                     + "- E-mail está vazio\n"
+                     + "- Formato do e-mail está corrento Ex: exemplo@exemplo.com\n"
+                     + "- O E-mail precisa conter no máximo 80 caracteres");
+        }
+         else if (nomeCliente.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "O nome não pode estar vazio");
-        } else if (email.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "O E-mail não pode estar vazio");
         } else {
             contato.setIdcontato(Integer.parseInt(codcontato.getText()));
             try {

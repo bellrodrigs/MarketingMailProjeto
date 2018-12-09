@@ -375,8 +375,13 @@ public class TelaEnviarEmail extends javax.swing.JFrame {
     }//GEN-LAST:event_RBTodosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(enderecoEmail.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"É preciso informar uma conta de e-mail");
+        String Email = enderecoEmail.getText();
+         if (!Email.matches("^[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+                 || Email.equals("") || Email.length() > 80) {
+             JOptionPane.showMessageDialog(null, "Verifique se:\n"
+                     + "- E-mail está vazio\n"
+                     + "- Formato do e-mail está corrento Ex: exemplo@exemplo.com\n"
+                     + "- O E-mail precisa conter no máximo 80 caracteres");
         }else if(Senha.getText().equals("")){
             JOptionPane.showMessageDialog(null,"A senha precisa ser preenchida");
         }else{
